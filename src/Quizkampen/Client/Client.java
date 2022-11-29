@@ -13,7 +13,6 @@ import java.net.Socket;
 import java.net.UnknownHostException;
 
 public class Client {
-
     private int port = 44444;
     Object fromServer;
     ObjectOutputStream out;
@@ -40,8 +39,8 @@ public class Client {
                     } else if (temp.startsWith("continue to categories")) {
                         String[] category1 = temp.split(":");
                         new CategoryPick(category1, this);
-                    }else if (temp.startsWith("done with questions")) {
-                        //new ScoreBoard();
+                    }else if (temp.startsWith("spelet avslutat")) {
+                        new ScoreBoard(this);
                     }
                 } else if (fromServer instanceof Response) {
                     Response tempResponse = (Response) fromServer;
