@@ -11,27 +11,26 @@ public class ScoreBoard extends JFrame implements ActionListener {
 
     Client client;
     JPanel headPanel = new JPanel();
-    JLabel title = new JLabel("Poängställning");
-    JPanel scoreInfo = new JPanel();
-
+    JLabel title = new JLabel("Poäng");
+    JPanel nameInfo = new JPanel();
     JPanel scoreBoard = new JPanel();
     JPanel middlePanel = new JPanel();
-    JButton continueButton = new JButton("Fortsätt");
+    JButton closeButton = new JButton("Stäng");
 
     public ScoreBoard(Client client) {
         this.client = client;
         headPanel.setLayout(new BorderLayout());
-        scoreInfo.setLayout(new GridLayout(1, 3)); //namn + poäng (format 0-0) + namn
+        nameInfo.setLayout(new GridLayout(1, 2)); //namn + poäng (format 0-0) + namn
         scoreBoard.setLayout(new GridLayout(2, 3));
         middlePanel.setLayout(new GridLayout(2, 1));
-        middlePanel.add(scoreInfo, scoreBoard);
+        middlePanel.add(nameInfo, scoreBoard);
         headPanel.add(title, BorderLayout.NORTH);
         headPanel.add(scoreBoard, BorderLayout.CENTER);
-        headPanel.add(continueButton, BorderLayout.SOUTH);
+        headPanel.add(closeButton, BorderLayout.SOUTH);
         add(headPanel);
-        continueButton.setOpaque(true);
-        continueButton.setBackground(Color.GREEN);
-        continueButton.addActionListener(this);
+        closeButton.setOpaque(true);
+        closeButton.setBackground(Color.GREEN);
+        closeButton.addActionListener(this);
         pack();
         setLocationRelativeTo(null);
         setVisible(true);
@@ -40,9 +39,12 @@ public class ScoreBoard extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == continueButton) {
-            setVisible(false);
-            client.sendData("continue to questions");
+        try {
+            if (e.getSource() == closeButton) {
+                System.exit(0);
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }

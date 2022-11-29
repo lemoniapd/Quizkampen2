@@ -20,7 +20,6 @@ public class Qdatabase {
     List<Question> gqList = List.of(g1, g2);
     List<Question> sqList = List.of(s1, s2);
 
-
     public Qdatabase() {
     }
 

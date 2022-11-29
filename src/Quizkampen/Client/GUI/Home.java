@@ -14,9 +14,9 @@ public class Home extends JFrame implements ActionListener {
     JLabel name = new JLabel();
     JButton startGameButton = new JButton("Starta nytt spel");
 
-    public Home(String input, Client client){
+    public Home(String input, Client client) {
         this.client = client;
-        headPanel.setLayout(new GridLayout(2,1));
+        headPanel.setLayout(new GridLayout(2, 1));
         name.setText("Välkommen " + input);
         headPanel.add(name);
         headPanel.add(startGameButton);
@@ -32,9 +32,13 @@ public class Home extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == startGameButton){
-            setVisible(false);
-            client.sendData("continue to categories");
+        try {
+            if (e.getSource() == startGameButton) {
+                setVisible(false);
+                client.sendData("continue to categories");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }

@@ -1,7 +1,6 @@
 package Quizkampen.Client.GUI;
 
 import Quizkampen.Client.Client;
-import Quizkampen.Questions.Qdatabase;
 
 import javax.swing.*;
 import java.awt.*;
@@ -9,7 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class CategoryPick extends JFrame implements ActionListener {
-    Qdatabase qDatabase = new Qdatabase();
+    private String[] categories;
     Client client;
     JPanel headPanel = new JPanel();
     JLabel title = new JLabel("Välj kategori: ");
@@ -17,11 +16,12 @@ public class CategoryPick extends JFrame implements ActionListener {
     JButton geographyCategory = new JButton();
     JButton swedishQuestions = new JButton();
 
-    public CategoryPick(Client client) {
+    public CategoryPick(String[] categories, Client client) {
         this.client = client;
-        mathCategory.setText(qDatabase.getMqList().get(0).getCategory());
-        geographyCategory.setText(qDatabase.getGqList().get(0).getCategory());
-        swedishQuestions.setText(qDatabase.getSqList().get(0).getCategory());
+        this.categories = categories;
+        mathCategory.setText(categories[1]);
+        geographyCategory.setText(categories[2]);
+        swedishQuestions.setText(categories[3]);
 
         headPanel.setLayout(new GridLayout(4, 1));
         headPanel.add(title);
@@ -40,15 +40,19 @@ public class CategoryPick extends JFrame implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getSource() == mathCategory) {
-            setVisible(false);
-            client.sendData("Math");
-        } else if (e.getSource() == geographyCategory) {
-            setVisible(false);
-            client.sendData("Geography");
-        } else if (e.getSource() == swedishQuestions) {
-            setVisible(false);
-            client.sendData("Swedish");
+        try {
+            if (e.getSource() == mathCategory) {
+                setVisible(false);
+                client.sendData("Math");
+            } else if (e.getSource() == geographyCategory) {
+                setVisible(false);
+                client.sendData("Geography");
+            } else if (e.getSource() == swedishQuestions) {
+                setVisible(false);
+                client.sendData("Swedish");
+            }
+        } catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }
