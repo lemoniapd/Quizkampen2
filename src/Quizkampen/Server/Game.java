@@ -21,7 +21,7 @@ public class Game extends Thread {
         try {
             properties.load(new FileInputStream("src/Quizkampen/GameSettings.properties"));
             amountOfRounds = Integer.parseInt(properties.getProperty("rounds", "2"));
-            amountOfQuestions = Integer.parseInt(properties.getProperty("questions", 2));
+            amountOfQuestions = Integer.parseInt(properties.getProperty("questions", "2"));
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -41,6 +41,7 @@ public class Game extends Thread {
 
             while (inputLine != null)  {
                 outputLine = quizProtocol.processInput(inputLine);
+                System.out.println(outputLine);
 
             }
         } catch (Exception e) {
