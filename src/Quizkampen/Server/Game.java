@@ -25,8 +25,6 @@ public class Game extends Thread {
         } catch (Exception ex) {
             ex.printStackTrace();
         }
-
-
     }
 
     public String categories() {
@@ -35,7 +33,7 @@ public class Game extends Thread {
 
     @Override
     public void run() {
-        String inputLine, outputLine;
+        String inputLine, outputLine; //Ändra om till inputline?
 
         try {
             ObjectOutputStream output1 = new ObjectOutputStream(socket1.getOutputStream());
@@ -43,13 +41,16 @@ public class Game extends Thread {
             ObjectInputStream input1 = new ObjectInputStream(socket1.getInputStream());
             ObjectInputStream input2 = new ObjectInputStream(socket2.getInputStream());
             while (true) {
-                //inputLine = String.valueOf(input1.readObject());
-                //inputLine = String.valueOf(input2.readObject());
 
-                Object o = input1.readObject();
-                System.out.println(o.getClass().getSimpleName());
+                //TODO villkor för att komma vidare, får inte vara null
+                inputLine = String.valueOf(input1.readObject());
+                inputLine = String.valueOf(input2.readObject());
 
-                String protocol = quizProtocol.processInput(String.valueOf(o));
+
+                //Object o = input1.readObject();
+                //System.out.println(o.getClass().getSimpleName());
+
+                String protocol = quizProtocol.processInput(inputLine);
                 //if (o instanceof String --- eller instanceof Response) {
                 if (protocol == "starta spel") {
                     output1.writeObject("continue to categories" + categories());
@@ -71,8 +72,7 @@ public class Game extends Thread {
                     //TODO kontroll av kategori
                     //TODO skicka respons
                     output2.writeObject("continue to questions");
-                }
-                else if (protocol == "visa scoreboard") {
+                } else if (protocol == "visa scoreboard") {
                     output1.writeObject("");
                     output2.writeObject("");
                 }

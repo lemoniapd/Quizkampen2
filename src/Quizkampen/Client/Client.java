@@ -27,6 +27,8 @@ public class Client {
             System.out.println("client first obj sent");
 
             while ((fromServer = in.readObject()) != null) {
+                //TODO casta ovan till response, allt som kommer in görs till
+                // response och lägg till konstruktorer och getters
                     System.out.println(fromServer);
                 if (fromServer instanceof String) {
                     String temp = fromServer.toString();
@@ -46,24 +48,6 @@ public class Client {
 
                      if (tempResponse.getOperation().equals("QuestionSent")) {
                          new QuestionMode(tempResponse.getqList(), 0, this);
-
-                         /*
-                        switch (category) {
-                            case "Math" -> new ScoreBoard(this);
-                            case "Geography" -> new ScoreBoard(this);
-                            case "Swedish" -> new ScoreBoard(this);
-                        }
-                    } else if (fromServer.startsWith("continue to questions")) {
-                        String category = fromServer.split(":")[1];
-                        System.out.println(category);
-
-                    switch (category) {
-                        case "Math" -> new QuestionMode(qdatabase.getMqResponse(), 0, this);
-                        case "Geography" -> new QuestionMode(qdatabase.getGqResponse(), 0, this);
-                        case "Swedish" -> new QuestionMode(qdatabase.getSqList(), 0, this);
-                    }
-                     */
-
                     }
                 }
             }
