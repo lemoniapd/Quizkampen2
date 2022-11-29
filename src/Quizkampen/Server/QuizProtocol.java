@@ -12,6 +12,28 @@ public class QuizProtocol {
     private int state = WAITING;
 
     public String processInput(String input) {
-        return null;
+        String output = null;
+
+        if (state == WAITING) {
+            output = "väntar på den andra spelaren";
+            if (input.startsWith("väntat klart")) {
+                state = START_GAME;
+            }
+        } else if (state == START_GAME) {
+            output = "starta spel";
+            state = CHOOSE_CATEGORY;
+        } else if (state == CHOOSE_CATEGORY) {
+            output = "välj kategori";
+            state = QUESTION_MODE;
+        } else if (state == QUESTION_MODE) {
+            output = "svara på frågor";
+            state = SHOW_SCOREBOARD;
+        } else if (state == SHOW_SCOREBOARD) {
+            output = "visa scoreboard";
+            state = GAME_FINISHED;
+        } else if (state == GAME_FINISHED) {
+            output = "spelet avslutat";
+        }
+        return output;
     }
 }
