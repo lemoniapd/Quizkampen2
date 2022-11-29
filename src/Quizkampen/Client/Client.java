@@ -42,8 +42,7 @@ public class Client {
                     }else if (temp.startsWith("spelet avslutat")) {
                         new ScoreBoard(this);
                     }
-                } else if (fromServer instanceof Response) {
-                    Response tempResponse = (Response) fromServer;
+                } else if (fromServer instanceof Response tempResponse) {
 
                      if (tempResponse.getOperation().equals("QuestionSent")) {
                          new QuestionMode(tempResponse.getqList(), 0, this);

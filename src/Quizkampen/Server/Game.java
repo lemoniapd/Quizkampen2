@@ -29,7 +29,7 @@ public class Game extends Thread {
 
     }
 
-    public String categories() {
+    public String categories() {  //test
         //return categories;
         return "Matematik:Geografi:Svenska seder";
     }
@@ -47,8 +47,11 @@ public class Game extends Thread {
                 //inputLine = String.valueOf(input1.readObject());
                 //inputLine = String.valueOf(input2.readObject());
 
-                String protocol = quizProtocol.processInput(String.valueOf(input1.readObject()));
+                Object o = input1.readObject();
+                System.out.println(o.getClass().getSimpleName());
 
+                String protocol = quizProtocol.processInput(String.valueOf(o));
+                //if (o instanceof String) {
                 if (protocol == "starta spel") {
                     output1.writeObject("continue to categories" + categories());
                     output2.writeObject("Starta spel");
@@ -59,15 +62,12 @@ public class Game extends Thread {
 
                     if (input1.readObject().toString() == "Math") {
                         output1.writeObject(new Response(qDatabase.getMqList()));
-
                     }
                     if (input1.readObject().toString() == "Geography") {
                         output1.writeObject(new Response(qDatabase.getGqList()));
-
                     }
                     if (input1.readObject().toString() == "Swedish") {
                         output1.writeObject(new Response(qDatabase.getSqList()));
-
                     }
 
                     //TODO ta emot kategorin
