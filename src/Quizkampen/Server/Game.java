@@ -29,8 +29,7 @@ public class Game extends Thread {
 
     }
 
-    public String categories() {  //test
-        //return categories;
+    public String categories() {
         return "Matematik:Geografi:Svenska seder";
     }
 
@@ -51,12 +50,10 @@ public class Game extends Thread {
                 System.out.println(o.getClass().getSimpleName());
 
                 String protocol = quizProtocol.processInput(String.valueOf(o));
-                //if (o instanceof String) {
+                //if (o instanceof String --- eller instanceof Response) {
                 if (protocol == "starta spel") {
                     output1.writeObject("continue to categories" + categories());
                     output2.writeObject("Starta spel");
-                    //outputLine = quizProtocol.processInput(inputLine);
-                    //output1.writeObject(outputLine);
                 }
                 else if (protocol == "svara på frågor") {
 
