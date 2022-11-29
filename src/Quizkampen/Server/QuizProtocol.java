@@ -9,10 +9,11 @@ public class QuizProtocol {
     public static final int SHOW_SCOREBOARD = 4;
     public static final int GAME_FINISHED = 5;
 
-    private int state = WAITING;
+    private int state = START_GAME;
 
     public String processInput(String input) {
         String output = null;
+        System.out.println("in protocol "+input);
 
         if (state == WAITING) {
             if (input.startsWith("väntat klart")) {
