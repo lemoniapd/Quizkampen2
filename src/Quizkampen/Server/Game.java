@@ -81,7 +81,6 @@ public class Game extends Thread {
                 }
             }
 
-            }
         } catch (Exception e) {
             e.printStackTrace();
         }

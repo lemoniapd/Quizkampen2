@@ -15,10 +15,10 @@ public class QuizProtocol {
         String output = null;
 
         if (state == WAITING) {
-            output = "väntar på den andra spelaren";
             if (input.startsWith("väntat klart")) {
                 state = START_GAME;
             }
+            else output = "väntar på den andra spelaren";
         } else if (state == START_GAME) {
             output = "starta spel";
             state = CHOOSE_CATEGORY;

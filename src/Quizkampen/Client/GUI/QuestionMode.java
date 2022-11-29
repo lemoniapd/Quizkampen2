@@ -2,7 +2,7 @@ package Quizkampen.Client.GUI;
 
 
 import Quizkampen.Client.Client;
-import Quizkampen.Questions.Question;
+import Quizkampen.Server.Questions.Question;
 
 import javax.swing.*;
 import java.awt.*;

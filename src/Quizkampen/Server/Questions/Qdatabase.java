@@ -1,5 +1,7 @@
 package Quizkampen.Server.Questions;
 
+import Quizkampen.Server.Response;
+
 import java.util.List;
 
 public class Qdatabase {
@@ -32,4 +34,5 @@ public class Qdatabase {
     public List<Question> getSqList() {
         return sqList;
     }
+
 }
