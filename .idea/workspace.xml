@@ -1,17 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="00297a17-80c4-445e-81d7-528906e92187" name="Changes" comment="New project to make &quot;gameroom&quot; rather that players for Quizkampen">
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Quizkampen/GameSettings.properties" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Quizkampen/Server/Questions/Qdatabase.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Quizkampen/Server/Questions/Question.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Quizkampen/Server/QuizProtocol.java" afterDir="false" />
+    <list default="true" id="00297a17-80c4-445e-81d7-528906e92187" name="Changes" comment="new version">
+      <change afterPath="$PROJECT_DIR$/.idea/runConfigurations/Client.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Quizkampen/Client/Client.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Server/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Quizkampen/Server/Game.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Server/Server.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Quizkampen/Server/Server.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Quizkampen/Client/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Quizkampen/Client/Client.java" afterDir="false" />
     </list>
+    <list id="b2597444-9ed5-4228-a030-1a4f9d8e804a" name="Changes by Toby9" comment="new version" />
+    <list id="5f83d518-3b9a-46de-ae58-47aa16df8cd2" name="Changes by User" comment="new version" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -38,15 +34,15 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.OpenProjectViewOnStart": "true",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
-    "WebServerToolWindowFactoryState": "false",
-    "last_opened_file_path": "/Users/lemoniapalmqvist/IdeaProjects/Quizkampen2/src/Quizkampen/Server"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;/Users/lemoniapalmqvist/IdeaProjects/Quizkampen2/src/Quizkampen/Server&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/Quizkampen/Server" />
