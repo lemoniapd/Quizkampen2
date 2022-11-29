@@ -29,7 +29,7 @@ public class Game extends Thread {
 
     }
 
-    public String categories() {
+    public String categories() {  //test
         //return categories;
         return "Matematik:Geografi:Svenska seder";
     }
