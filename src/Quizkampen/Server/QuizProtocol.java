@@ -13,16 +13,19 @@ public class QuizProtocol {
 
     public Response processInput(Response input) {
         Response output = null;
-        System.out.println("in protocol "+input);
+        System.out.println("in protocol " + input.getOperation());
 
-        if (state == WAITING) {
+        /*if (state == WAITING) {
             if (input.getOperation().equalsIgnoreCase("väntat klart")) {
                 state = START_GAME;
             }
             else output = new Response("väntar på den andra spelaren");
-        } else if (state == START_GAME) {
+            }
+         */
+        if (state == START_GAME) {
             output = new Response("starta spel");
             state = CHOOSE_CATEGORY;
+            return output;
         } else if (state == CHOOSE_CATEGORY) {
             output = new Response("välj kategori");
             state = QUESTION_MODE;
@@ -32,14 +35,17 @@ public class QuizProtocol {
             output = new Response("svara");
             System.out.println("KOMMER HIT?");
             state = SHOW_SCOREBOARD;
+            return output;
         } else if (state == SHOW_SCOREBOARD) {
             System.out.println("protkoll scoreboard");
             output = new Response("visa scoreboard");
             state = GAME_FINISHED;
+            return output;
         } else if (state == GAME_FINISHED) {
             System.out.println("protkoll avslut");
             output = new Response("spelet avslutat");
+            return output;
         }
-        return output;
+        return null;
     }
 }
