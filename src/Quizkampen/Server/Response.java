@@ -13,10 +13,6 @@ public class Response implements Serializable {
 
     protected List<Question> qList;
 
-    public Response(List<Question> qList){
-        this.qList = qList;
-    }
-
     public Response(String operation) {
         this.operation = operation;
     }
