@@ -35,7 +35,7 @@ public class Game extends Thread implements Serializable{
 
     @Override
     public void run() {
-        Response inputLine = null;
+        Response inputLine;
         Response outputLine;
 
         try {
@@ -44,32 +44,29 @@ public class Game extends Thread implements Serializable{
             ObjectInputStream input1 = new ObjectInputStream(socket1.getInputStream());
             ObjectInputStream input2 = new ObjectInputStream(socket2.getInputStream());
 
-            while (((Response) input1.readObject()) != null) {
-
-                //TODO villkor för att komma vidare, får inte vara null
-                inputLine = ((Response) input1.readObject());
-                //inputLine = ((Response) input2.readObject());
-
-
-                //Object o = input1.readObject();
-                //System.out.println(o.getClass().getSimpleName());
+            while (input1.readObject() != null || input2.readObject() != null) {
+                //inputLine = ((Response) input1.readObject());
+                inputLine = ((Response) input2.readObject());
 
                 Response protocol = quizProtocol.processInput(inputLine);
                 if (protocol.getOperation().equalsIgnoreCase("starta spel")) {
                     output1.writeObject(new Response("continue to categories", categories()));
-                    output2.writeObject("Starta spel");
+                    output2.writeObject(new Response("Starta spel"));
                 }
                 else if (protocol.getOperation().equalsIgnoreCase("svara på frågor")) {
 
                     if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Math")) {
                         output1.writeObject(new Response("QuestionSent", qDatabase.getMqList()));
-                        output1.writeObject(new Response(qDatabase.getMqList()));
+                        output2.writeObject(new Response("QuestionSent", qDatabase.getMqList()));
+
                     }
                     if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Geography")) {
                         output1.writeObject(new Response("QuestionSent", qDatabase.getGqList()));
+                        output2.writeObject(new Response("QuestionSent", qDatabase.getGqList()));
                     }
                     if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Swedish")) {
                         output1.writeObject(new Response("QuestionSent", qDatabase.getSqList()));
+                        output2.writeObject(new Response("QuestionSent", qDatabase.getSqList()));
                     }
 
                     //TODO ta emot kategorin
@@ -77,6 +74,7 @@ public class Game extends Thread implements Serializable{
                     //TODO skicka respons
                     output2.writeObject(new Response("continue to questions"));
                 } else if (protocol.getOperation().equalsIgnoreCase("visa scoreboard")) {
+                    //TODO, kolla båda spelare
                     output1.writeObject(new Response("spelet avslutat"));
                     output2.writeObject(new Response("spelet avslutat"));
                 }

@@ -20,9 +20,9 @@ public class CategoryPick extends JFrame implements ActionListener {
     public CategoryPick(String[] categories, Client client) {
         this.client = client;
         this.categories = categories;
-        mathCategory.setText(categories[1]);
-        geographyCategory.setText(categories[2]);
-        swedishQuestions.setText(categories[3]);
+        mathCategory.setText(categories[0]);
+        geographyCategory.setText(categories[1]);
+        swedishQuestions.setText(categories[2]);
 
         headPanel.setLayout(new GridLayout(4, 1));
         headPanel.add(title);
