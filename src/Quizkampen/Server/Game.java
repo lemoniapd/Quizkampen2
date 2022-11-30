@@ -47,8 +47,8 @@ public class Game extends Thread implements Serializable{
             while (((Response) input1.readObject()) != null) {
 
                 //TODO villkor för att komma vidare, får inte vara null
-                inputLine = String.valueOf(input1.readObject());
-                inputLine = String.valueOf(input2.readObject());
+                inputLine = ((Response) input1.readObject());
+                //inputLine = ((Response) input2.readObject());
 
 
                 //Object o = input1.readObject();
@@ -59,7 +59,7 @@ public class Game extends Thread implements Serializable{
                     output1.writeObject(new Response("continue to categories", categories()));
                     output2.writeObject("Starta spel");
                 }
-                else if (protocol == "svara på frågor") {
+                else if (protocol.getOperation().equalsIgnoreCase("svara på frågor")) {
 
                     if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Math")) {
                         output1.writeObject(new Response("QuestionSent", qDatabase.getMqList()));

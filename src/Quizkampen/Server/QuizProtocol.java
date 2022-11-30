@@ -30,10 +30,10 @@ public class QuizProtocol {
             output = new Response("svara på frågor");
             state = SHOW_SCOREBOARD;
         } else if (state == SHOW_SCOREBOARD) {
-            output = "visa scoreboard";
+            output = new Response("visa scoreboard");
             state = GAME_FINISHED;
         } else if (state == GAME_FINISHED) {
-            output = "spelet avslutat";
+            output = new Response("spelet avslutat");
         }
         return output;
     }
