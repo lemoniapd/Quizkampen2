@@ -12,56 +12,47 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Client {
-    private int port = 44444;
-    Object fromServer;
+public class Client implements Serializable{
+    private int port = 8888;
+    Response fromServer;
     ObjectOutputStream out;
 
-    public Client(InetAddress ip) {
+    public Client(InetAddress ip) throws IOException {
 
         try (Socket socket = new Socket(ip, port);
              ObjectInputStream in = new ObjectInputStream(socket.getInputStream())) {
             out = new ObjectOutputStream(socket.getOutputStream());
 
-            out.writeObject("starta spel");
+            out.writeObject(new Response("starta spel"));
             System.out.println("client first obj sent");
 
-            while ((fromServer = in.readObject()) != null) {
-                //TODO casta ovan till response, allt som kommer in görs till
-                // response och lägg till konstruktorer och getters
-                    System.out.println(fromServer);
-                if (fromServer instanceof String) {
-                    String temp = fromServer.toString();
-                    if (temp.startsWith("Starta spel")) {
-                        // Enter data using BufferReader
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                        String playerName = reader.readLine();
-                        new Home(playerName, this);
-                        sendData(playerName);
-                    } else if (temp.startsWith("continue to categories")) {
-                        String[] category1 = temp.split(":");
-                        new CategoryPick(category1, this);
-                    }else if (temp.startsWith("spelet avslutat")) {
-                        new ScoreBoard(this);
-                    }
-                } else if (fromServer instanceof Response tempResponse) {
-
-                     if (tempResponse.getOperation().equals("QuestionSent")) {
-                         new QuestionMode(tempResponse.getqList(), 0, this);
-                    }
+            while ((fromServer = (Response) in.readObject()) != null) {
+                System.out.println(fromServer);
+                if (fromServer.getOperation().equalsIgnoreCase("Starta spel")) {
+                    // Enter data using BufferReader
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                    String playerName = reader.readLine();
+                    new Home(playerName, this);
+                    //sendData(playerName);
+                } else if (fromServer.getOperation().equalsIgnoreCase("continue to categories")) {
+                    String[] categories = fromServer.getMessage().split(":");
+                    new CategoryPick(categories, this);
+                } else if (fromServer.getOperation().equalsIgnoreCase("QuestionSent")) {
+                    new QuestionMode(fromServer.getqList(), 0, this);
+                } else if (fromServer.getOperation().equalsIgnoreCase("spelet avslutat")) {
+                    new ScoreBoard(this);
                 }
             }
-
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    public void sendData(String data) throws IOException {
+    public void sendData(Response data) throws IOException {
         out.writeObject(data);
     }
 
-    public static void main(String[] args) throws UnknownHostException {
+    public static void main(String[] args) throws IOException {
         InetAddress ip = InetAddress.getLocalHost();
         new Client(ip);
     }

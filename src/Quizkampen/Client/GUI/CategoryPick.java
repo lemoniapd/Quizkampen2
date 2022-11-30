@@ -1,6 +1,7 @@
 package Quizkampen.Client.GUI;
 
 import Quizkampen.Client.Client;
+import Quizkampen.Server.Response;
 
 import javax.swing.*;
 import java.awt.*;
@@ -43,13 +44,13 @@ public class CategoryPick extends JFrame implements ActionListener {
         try {
             if (e.getSource() == mathCategory) {
                 setVisible(false);
-                client.sendData("Math");
+                client.sendData(new Response("svara på frågor", "Math"));
             } else if (e.getSource() == geographyCategory) {
                 setVisible(false);
-                client.sendData("Geography");
+                client.sendData(new Response("svara på frågor", "Geography"));
             } else if (e.getSource() == swedishQuestions) {
                 setVisible(false);
-                client.sendData("Swedish");
+                client.sendData(new Response("svara på frågor", "Swedish"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

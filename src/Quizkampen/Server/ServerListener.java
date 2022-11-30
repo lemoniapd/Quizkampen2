@@ -1,11 +1,12 @@
 package Quizkampen.Server;
 
+import java.io.Serializable;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class ServerListener {
+public class ServerListener implements Serializable {
 
-    private int port = 44444;
+    private int port = 8888;
 
     public ServerListener() {
         try (ServerSocket serverSocket = new ServerSocket(port)) {
