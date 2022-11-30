@@ -30,9 +30,11 @@ public class QuizProtocol {
             output = new Response("svara på frågor");
             state = SHOW_SCOREBOARD;
         } else if (state == SHOW_SCOREBOARD) {
+            System.out.println("protkoll scoreboard");
             output = new Response("visa scoreboard");
             state = GAME_FINISHED;
         } else if (state == GAME_FINISHED) {
+            System.out.println("protkoll avslut");
             output = new Response("spelet avslutat");
         }
         return output;

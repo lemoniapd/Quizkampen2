@@ -6,7 +6,7 @@ import java.io.*;
 import java.net.Socket;
 import java.util.Properties;
 
-public class Game extends Thread implements Serializable{
+public class Game extends Thread implements Serializable {
     Properties properties = new Properties();
     Qdatabase qDatabase = new Qdatabase();
     QuizProtocol quizProtocol = new QuizProtocol();
@@ -47,36 +47,44 @@ public class Game extends Thread implements Serializable{
             while (input1.readObject() != null || input2.readObject() != null) {
                 //inputLine = ((Response) input1.readObject());
                 inputLine = ((Response) input2.readObject());
-
                 Response protocol = quizProtocol.processInput(inputLine);
                 if (protocol.getOperation().equalsIgnoreCase("starta spel")) {
-                    output1.writeObject(new Response("continue to categories", categories()));
-                    output2.writeObject(new Response("Starta spel"));
-                }
-                else if (protocol.getOperation().equalsIgnoreCase("svara på frågor")) {
+                    outputLine = new Response("starta spel");
+                    output1.writeObject(outputLine);
+                    output1.reset();
+                    output2.writeObject(outputLine);
+                    output2.reset();
+                } else if (protocol.getOperation().equalsIgnoreCase("välj kategori")) {
+                    outputLine = new Response("continue to categories", categories());
+                    output2.writeObject(outputLine);
+                    output2.reset();
 
-                    if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Math")) {
-                        output1.writeObject(new Response("QuestionSent", qDatabase.getMqList()));
-                        output2.writeObject(new Response("QuestionSent", qDatabase.getMqList()));
-
-                    }
-                    if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Geography")) {
-                        output1.writeObject(new Response("QuestionSent", qDatabase.getGqList()));
-                        output2.writeObject(new Response("QuestionSent", qDatabase.getGqList()));
-                    }
-                    if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Swedish")) {
-                        output1.writeObject(new Response("QuestionSent", qDatabase.getSqList()));
-                        output2.writeObject(new Response("QuestionSent", qDatabase.getSqList()));
-                    }
-
+                } else if (protocol.getOperation().equalsIgnoreCase("svara på frågor")) {
+                    System.out.println("game svara på frågor");
                     //TODO ta emot kategorin
                     //TODO kontroll av kategori
-                    //TODO skicka respons
+                    if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Math")) {
+                        outputLine = new Response("QuestionSent", qDatabase.getMqList());
+                        output1.writeObject(outputLine);
+                        output2.writeObject(outputLine);
+                    }
+                    if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Geography")) {
+                        outputLine = new Response("QuestionSent", qDatabase.getGqList());
+                        output1.writeObject(outputLine);
+                        output2.writeObject(outputLine);
+                    }
+                    if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Swedish")) {
+                        outputLine = new Response("QuestionSent", qDatabase.getSqList());
+                        output1.writeObject(outputLine);
+                        output2.writeObject(outputLine);
+                    }
+
                     output2.writeObject(new Response("continue to questions"));
                 } else if (protocol.getOperation().equalsIgnoreCase("visa scoreboard")) {
                     //TODO, kolla båda spelare
-                    output1.writeObject(new Response("spelet avslutat"));
-                    output2.writeObject(new Response("spelet avslutat"));
+                    outputLine = new Response("spelet avslutat");
+                    output1.writeObject(outputLine);
+                    output2.writeObject(outputLine);
                 }
             }
 
