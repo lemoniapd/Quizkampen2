@@ -26,8 +26,11 @@ public class QuizProtocol {
         } else if (state == CHOOSE_CATEGORY) {
             output = new Response("välj kategori");
             state = QUESTION_MODE;
+            System.out.println("state satt till q-mode");
+            return output;
         } else if (state == QUESTION_MODE) {
-            output = new Response("svara på frågor");
+            output = new Response("svara");
+            System.out.println("KOMMER HIT?");
             state = SHOW_SCOREBOARD;
         } else if (state == SHOW_SCOREBOARD) {
             System.out.println("protkoll scoreboard");

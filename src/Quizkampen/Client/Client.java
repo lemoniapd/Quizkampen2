@@ -33,10 +33,11 @@ public class Client implements Serializable{
                     BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
                     String playerName = reader.readLine();
                     new Home(playerName, this);
-                    //sendData(playerName);
-                } else if (fromServer.getOperation().equalsIgnoreCase("continue to categories")) {
+                } else if (fromServer.getOperation().equalsIgnoreCase("välj kategori")) {
                     String[] categories = fromServer.getMessage().split(":");
                     new CategoryPick(categories, this);
+                } else if (fromServer.getOperation().equalsIgnoreCase("svara")) {
+                    System.out.println("svara på frågor");
                 } else if (fromServer.getOperation().equalsIgnoreCase("QuestionSent")) {
                     new QuestionMode(fromServer.getqList(), 0, this);
                 } else if (fromServer.getOperation().equalsIgnoreCase("spelet avslutat")) {
@@ -49,6 +50,10 @@ public class Client implements Serializable{
     }
 
     public void sendData(Response data) throws IOException {
+        out.reset();
+        System.out.println("Klient skickar op " + data.getOperation());
+        System.out.println("Klient skickar mes " + data.getMessage());
+
         out.writeObject(data);
     }
 

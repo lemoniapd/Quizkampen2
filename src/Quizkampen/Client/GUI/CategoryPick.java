@@ -44,13 +44,14 @@ public class CategoryPick extends JFrame implements ActionListener {
         try {
             if (e.getSource() == mathCategory) {
                 setVisible(false);
-                client.sendData(new Response("svara på frågor", "Math"));
+                client.sendData(new Response("svara", "Math"));
+                System.out.println("skickat kategorival till server");
             } else if (e.getSource() == geographyCategory) {
                 setVisible(false);
-                client.sendData(new Response("svara på frågor", "Geography"));
+                client.sendData(new Response("svara", "Geography"));
             } else if (e.getSource() == swedishQuestions) {
                 setVisible(false);
-                client.sendData(new Response("svara på frågor", "Swedish"));
+                client.sendData(new Response("svara", "Swedish"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

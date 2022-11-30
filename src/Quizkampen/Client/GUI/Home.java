@@ -36,7 +36,7 @@ public class Home extends JFrame implements ActionListener {
         try {
             if (e.getSource() == startGameButton) {
                 setVisible(false);
-                client.sendData(new Response("continue to categories"));
+                client.sendData(new Response("välj kategori"));
             }
         } catch (Exception ex) {
             ex.printStackTrace();

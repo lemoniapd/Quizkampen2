@@ -35,7 +35,8 @@ public class Game extends Thread implements Serializable {
 
     @Override
     public void run() {
-        Response inputLine;
+        Response inputLine1;
+        Response inputLine2;
         Response outputLine;
 
         try {
@@ -45,9 +46,11 @@ public class Game extends Thread implements Serializable {
             ObjectInputStream input2 = new ObjectInputStream(socket2.getInputStream());
 
             while (input1.readObject() != null || input2.readObject() != null) {
-                //inputLine = ((Response) input1.readObject());
-                inputLine = ((Response) input2.readObject());
-                Response protocol = quizProtocol.processInput(inputLine);
+                //inputLine1 = ((Response) input1.readObject());
+                inputLine2 = ((Response) input2.readObject());
+                // System.out.println(inputLine1);
+                System.out.println("Klient " + inputLine2.getOperation());
+                Response protocol = quizProtocol.processInput(inputLine2);
                 if (protocol.getOperation().equalsIgnoreCase("starta spel")) {
                     outputLine = new Response("starta spel");
                     output1.writeObject(outputLine);
@@ -55,31 +58,31 @@ public class Game extends Thread implements Serializable {
                     output2.writeObject(outputLine);
                     output2.reset();
                 } else if (protocol.getOperation().equalsIgnoreCase("välj kategori")) {
-                    outputLine = new Response("continue to categories", categories());
+                    //System.out.println(inputLine2.operation);
+                    outputLine = new Response("välj kategori", categories());
+                    System.out.println(outputLine.getOperation() + outputLine.getMessage());
                     output2.writeObject(outputLine);
+                    output1.reset();
                     output2.reset();
-
-                } else if (protocol.getOperation().equalsIgnoreCase("svara på frågor")) {
+                } else if (protocol.getOperation().equalsIgnoreCase("svara")) {
                     System.out.println("game svara på frågor");
                     //TODO ta emot kategorin
                     //TODO kontroll av kategori
-                    if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Math")) {
+                    if (((Response) input2.readObject()).getMessage().equalsIgnoreCase("Math")) {
                         outputLine = new Response("QuestionSent", qDatabase.getMqList());
                         output1.writeObject(outputLine);
                         output2.writeObject(outputLine);
                     }
-                    if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Geography")) {
+                    if (((Response) input2.readObject()).getMessage().equalsIgnoreCase("Geography")) {
                         outputLine = new Response("QuestionSent", qDatabase.getGqList());
                         output1.writeObject(outputLine);
                         output2.writeObject(outputLine);
                     }
-                    if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Swedish")) {
+                    if (((Response) input2.readObject()).getMessage().equalsIgnoreCase("Swedish")) {
                         outputLine = new Response("QuestionSent", qDatabase.getSqList());
                         output1.writeObject(outputLine);
                         output2.writeObject(outputLine);
                     }
-
-                    output2.writeObject(new Response("continue to questions"));
                 } else if (protocol.getOperation().equalsIgnoreCase("visa scoreboard")) {
                     //TODO, kolla båda spelare
                     outputLine = new Response("spelet avslutat");
