@@ -29,7 +29,7 @@ public class Client implements Serializable{
             System.out.println("client first obj sent");
 
             while ((fromServer = (Response) in.readObject()) != null) {
-                System.out.println(fromServer);
+                System.out.println(fromServer.getOperation());
                 if (fromServer.getOperation().equalsIgnoreCase("Starta spel")) {
                     // Enter name using BufferReader
                     String playerName = JOptionPane.showInputDialog("Skriv in ditt namn");

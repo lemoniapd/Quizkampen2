@@ -32,7 +32,6 @@ public class Game extends Thread implements Serializable {
         return "Matematik:Geografi:Svenska seder";
     }
 
-
     @Override
     public void run() {
         Response inputLine;
