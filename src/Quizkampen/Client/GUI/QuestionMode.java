@@ -3,12 +3,14 @@ package Quizkampen.Client.GUI;
 
 import Quizkampen.Client.Client;
 import Quizkampen.Server.Questions.Question;
+import Quizkampen.Server.Response;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Properties;
 
@@ -104,9 +106,11 @@ public class QuestionMode extends JFrame implements ActionListener {
         char answer = btn.getName().charAt(0);
         if (answer == questionsList.get(questionIndex).getRightAnswer()) {
             btn.setBackground(Color.GREEN);
+            client.addRoundData(true);
             //skicka poäng till server
         } else {
             btn.setBackground(Color.RED);
+            client.addRoundData(false);
         }
     }
 
@@ -116,7 +120,16 @@ public class QuestionMode extends JFrame implements ActionListener {
         ActionListener timerListener = evt -> {
             setVisible(false);
             if (questionIndex == amountOfQuestions-1) {
+                client.sendRoundDone();
                 System.out.println("done with questions");
+                if (client.currentRound < 2) {
+                    try {
+                        client.sendData(new Response("välj kategori", "2"));
+                    } catch (IOException ex) {
+                        throw new RuntimeException(ex);
+                    }
+                }
+                else {new ScoreBoard(client); }
             } else {
                 new QuestionMode(questionsList, ++questionIndex, this.client);
             }

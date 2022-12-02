@@ -4,18 +4,20 @@ import Quizkampen.Client.GUI.CategoryPick;
 import Quizkampen.Client.GUI.Home;
 import Quizkampen.Client.GUI.QuestionMode;
 import Quizkampen.Client.GUI.ScoreBoard;
-import Quizkampen.Server.Questions.Question;
 import Quizkampen.Server.Response;
 
+import javax.swing.*;
 import java.io.*;
 import java.net.InetAddress;
 import java.net.Socket;
-import java.net.UnknownHostException;
+import java.util.ArrayList;
 
 public class Client implements Serializable{
     private int port = 8888;
     Response fromServer;
     ObjectOutputStream out;
+    ArrayList<Boolean> round = new ArrayList<Boolean>();
+    public int currentRound = 0;
 
     public Client(InetAddress ip) throws IOException {
 
@@ -30,11 +32,10 @@ public class Client implements Serializable{
                 System.out.println(fromServer);
                 if (fromServer.getOperation().equalsIgnoreCase("Starta spel")) {
                     // Enter name using BufferReader
-                    BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                    String playerName = reader.readLine();
+                    String playerName = JOptionPane.showInputDialog("Skriv in ditt namn");
                     new Home(playerName, this);
-                    //sendData(playerName);
                 } else if (fromServer.getOperation().equalsIgnoreCase("continue to categories")) {
+                    currentRound++;
                     String[] categories = fromServer.getMessage().split(":");
                     new CategoryPick(categories, this);
                 } else if (fromServer.getOperation().equalsIgnoreCase("QuestionSent")) {
@@ -50,6 +51,17 @@ public class Client implements Serializable{
 
     public void sendData(Response data) throws IOException {
         out.writeObject(data);
+    }
+    public void addRoundData(boolean correctAnswer)  {
+        round.add(correctAnswer);
+    }
+    public void sendRoundDone() {
+        try {
+            sendData(new Response("Send Points", round));
+            round.clear();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void main(String[] args) throws IOException {

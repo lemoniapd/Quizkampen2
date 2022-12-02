@@ -44,36 +44,57 @@ public class Game extends Thread implements Serializable {
             ObjectInputStream input1 = new ObjectInputStream(socket1.getInputStream());
             ObjectInputStream input2 = new ObjectInputStream(socket2.getInputStream());
 
-            while (input1.readObject() != null || input2.readObject() != null) {
-                //inputLine = ((Response) input1.readObject());
-                inputLine = ((Response) input2.readObject());
-                Response protocol = quizProtocol.processInput(inputLine);
+            int currentPlayer;
+
+
+            while (true) {
+                if (socket1.getInputStream().available() != 0) {
+                    currentPlayer = 1;
+                    inputLine = (Response) input1.readObject();
+                }
+                else if (socket2.getInputStream().available() != 0) {
+                    currentPlayer = 2;
+                    inputLine = (Response) input2.readObject();
+                }
+                else {
+                    Thread.sleep(500);
+                    continue;
+                }
+
+                System.out.println(currentPlayer);
+                Response protocol = inputLine;
+                System.out.println(protocol.getOperation());
+
                 if (protocol.getOperation().equalsIgnoreCase("starta spel")) {
                     outputLine = new Response("starta spel");
-                    output1.writeObject(outputLine);
-                    output1.reset();
-                    output2.writeObject(outputLine);
-                    output2.reset();
+                    if (currentPlayer == 1) {
+                        output1.writeObject(outputLine);
+                    } else {
+                        output2.writeObject(outputLine);
+                    }
                 } else if (protocol.getOperation().equalsIgnoreCase("välj kategori")) {
+                    if (currentPlayer != Integer.parseInt(protocol.getMessage())) {
+                        continue;
+                    }
                     outputLine = new Response("continue to categories", categories());
-                    output2.writeObject(outputLine);
-                    output2.reset();
+                    System.out.println("hallå");
+                    output1.writeObject(outputLine);
 
                 } else if (protocol.getOperation().equalsIgnoreCase("svara på frågor")) {
                     System.out.println("game svara på frågor");
                     //TODO ta emot kategorin
                     //TODO kontroll av kategori
-                    if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Math")) {
+                    if (protocol.getMessage().equalsIgnoreCase("Math")) {
                         outputLine = new Response("QuestionSent", qDatabase.getMqList());
                         output1.writeObject(outputLine);
                         output2.writeObject(outputLine);
                     }
-                    if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Geography")) {
+                    if (protocol.getMessage().equalsIgnoreCase("Geography")) {
                         outputLine = new Response("QuestionSent", qDatabase.getGqList());
                         output1.writeObject(outputLine);
                         output2.writeObject(outputLine);
                     }
-                    if (((Response) input1.readObject()).getMessage().equalsIgnoreCase("Swedish")) {
+                    if (protocol.getMessage().equalsIgnoreCase("Swedish")) {
                         outputLine = new Response("QuestionSent", qDatabase.getSqList());
                         output1.writeObject(outputLine);
                         output2.writeObject(outputLine);

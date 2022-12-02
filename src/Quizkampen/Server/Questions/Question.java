@@ -1,6 +1,8 @@
 package Quizkampen.Server.Questions;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
 
     public String category;
     public String question;
